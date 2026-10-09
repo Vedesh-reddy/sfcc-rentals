@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata xmlns="http://www.demandware.com/xml/impex/metadata/2006-10-31">
+    <type-extension type-id="Product">
+        <custom-attribute-definitions>
+            <attribute-definition attribute-id="rentalEnabled">
+                <display-name xml:lang="x-default">Available for rent (needs the rentalDuration and rentalDeposit options)</display-name>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+        </custom-attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="Rentals">
+                <display-name xml:lang="x-default">Rentals</display-name>
+                <attribute attribute-id="rentalEnabled"/>
+            </attribute-group>
+        </group-definitions>
+    </type-extension>
+    <type-extension type-id="ProductLineItem">
+        <custom-attribute-definitions>
+            <attribute-definition attribute-id="rentalStart">
+                <display-name xml:lang="x-default">Rental start (yyyy-MM-dd)</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="rentalBookingNo">
+                <display-name xml:lang="x-default">Rental booking number</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+        </custom-attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="Rentals">
+                <display-name xml:lang="x-default">Rentals</display-name>
+                <attribute attribute-id="rentalStart"/>
+                <attribute attribute-id="rentalBookingNo"/>
+            </attribute-group>
+        </group-definitions>
+    </type-extension>
+    <type-extension type-id="SitePreferences">
+        <custom-attribute-definitions>
+            <attribute-definition attribute-id="RentalsEnabled">
+                <display-name xml:lang="x-default">Rentals enabled</display-name>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>false</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="RentalLeadDays">
+                <display-name xml:lang="x-default">Earliest start, in days from today (dispatch time)</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>3</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="RentalHorizonDays">
+                <display-name xml:lang="x-default">Latest start, in days from today</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>180</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="RentalBufferDays">
+                <display-name xml:lang="x-default">Cleaning and return-transit days blocked after each rental</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>2</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="RentalHoldMinutes">
+                <display-name xml:lang="x-default">Minutes a piece stays held in the cart</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>30</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="RentalLateFeePerDay">
+                <display-name xml:lang="x-default">Late fee per day, in the site currency</display-name>
+                <type>double</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>500</default-value>
+            </attribute-definition>
+        </custom-attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="Rentals">
+                <display-name xml:lang="x-default">Rentals</display-name>
+                <attribute attribute-id="RentalsEnabled"/>
+                <attribute attribute-id="RentalLeadDays"/>
+                <attribute attribute-id="RentalHorizonDays"/>
+                <attribute attribute-id="RentalBufferDays"/>
+                <attribute attribute-id="RentalHoldMinutes"/>
+                <attribute attribute-id="RentalLateFeePerDay"/>
+            </attribute-group>
+        </group-definitions>
+    </type-extension>
+</metadata>
