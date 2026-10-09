@@ -1,0 +1,14 @@
+node_modules/
+cartridges/*/cartridge/static/
+dist/
+coverage/
+.nyc_output/
+*.log
+.DS_Store
+.vscode/
+.idea/
+dw.json
+**/dw.json
+.env
+.env.*
+!.env.example
