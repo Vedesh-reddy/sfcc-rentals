@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata xmlns="http://www.demandware.com/xml/impex/metadata/2006-10-31">
+    <custom-type type-id="RentalUnit">
+        <display-name xml:lang="x-default">Rental unit</display-name>
+        <description xml:lang="x-default">One physical piece that can be rented, keyed by its tag number.</description>
+        <staging-mode>no-staging</staging-mode>
+        <storage-scope>site</storage-scope>
+        <key-definition attribute-id="key">
+            <display-name xml:lang="x-default">Unit tag</display-name>
+            <type>string</type>
+            <min-length>1</min-length>
+        </key-definition>
+        <attribute-definitions>
+            <attribute-definition attribute-id="productID">
+                <display-name xml:lang="x-default">Product ID (the variant, so the size is fixed)</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="status">
+                <display-name xml:lang="x-default">Status (ACTIVE, MAINTENANCE, RETIRED)</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="notes">
+                <display-name xml:lang="x-default">Condition notes</display-name>
+                <type>text</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+        </attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="RentalUnit">
+                <display-name xml:lang="x-default">Rental unit</display-name>
+                <attribute attribute-id="productID"/>
+                <attribute attribute-id="status"/>
+                <attribute attribute-id="notes"/>
+            </attribute-group>
+        </group-definitions>
+    </custom-type>
+    <custom-type type-id="RentalUnitDay">
+        <display-name xml:lang="x-default">Rental unit day</display-name>
+        <description xml:lang="x-default">Claims one calendar day of one unit. The key is unit|yyyy-MM-dd, so two bookings can never hold the same day.</description>
+        <staging-mode>no-staging</staging-mode>
+        <storage-scope>site</storage-scope>
+        <key-definition attribute-id="key">
+            <display-name xml:lang="x-default">Unit and day</display-name>
+            <type>string</type>
+            <min-length>1</min-length>
+        </key-definition>
+        <attribute-definitions>
+            <attribute-definition attribute-id="unitID">
+                <display-name xml:lang="x-default">Unit tag</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="day">
+                <display-name xml:lang="x-default">Day (yyyy-MM-dd)</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="bookingNo">
+                <display-name xml:lang="x-default">Booking number</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="holdExpiresAt">
+                <display-name xml:lang="x-default">Cart hold expires at (empty once the booking is confirmed)</display-name>
+                <type>datetime</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+        </attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="RentalUnitDay">
+                <display-name xml:lang="x-default">Rental unit day</display-name>
+                <attribute attribute-id="unitID"/>
+                <attribute attribute-id="day"/>
+                <attribute attribute-id="bookingNo"/>
+                <attribute attribute-id="holdExpiresAt"/>
+            </attribute-group>
+        </group-definitions>
+    </custom-type>
+    <custom-type type-id="RentalBooking">
+        <display-name xml:lang="x-default">Rental booking</display-name>
+        <description xml:lang="x-default">One rental or size trial of one unit and its lifecycle.</description>
+        <staging-mode>no-staging</staging-mode>
+        <storage-scope>site</storage-scope>
+        <key-definition attribute-id="key">
+            <display-name xml:lang="x-default">Booking number</display-name>
+            <type>string</type>
+            <min-length>1</min-length>
+        </key-definition>
+        <attribute-definitions>
+            <attribute-definition attribute-id="type">
+                <display-name xml:lang="x-default">Type (RENTAL, TRIAL)</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="status">
+                <display-name xml:lang="x-default">Status (HELD, RESERVED, DISPATCHED, WITH_CUSTOMER, RETURNED, INSPECTED, DEPOSIT_REFUNDED, COMPLETED, CANCELLED, EXPIRED)</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="unitID">
+                <display-name xml:lang="x-default">Unit tag</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="productID">
+                <display-name xml:lang="x-default">Product ID</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="productName">
+                <display-name xml:lang="x-default">Product name</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="startDate">
+                <display-name xml:lang="x-default">First rental day (yyyy-MM-dd)</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="endDate">
+                <display-name xml:lang="x-default">Return due (yyyy-MM-dd)</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="blockedUntil">
+                <display-name xml:lang="x-default">Last day the unit is blocked, including cleaning (yyyy-MM-dd)</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="durationDays">
+                <display-name xml:lang="x-default">Rental days</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="holdExpiresAt">
+                <display-name xml:lang="x-default">Cart hold expires at</display-name>
+                <type>datetime</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="orderNo">
+                <display-name xml:lang="x-default">Order number</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="customerNo">
+                <display-name xml:lang="x-default">Customer number</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="customerEmail">
+                <display-name xml:lang="x-default">Customer email</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="customerName">
+                <display-name xml:lang="x-default">Customer name</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="currency">
+                <display-name xml:lang="x-default">Currency</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="rentalFee">
+                <display-name xml:lang="x-default">Rental fee paid</display-name>
+                <type>double</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="depositAmount">
+                <display-name xml:lang="x-default">Security deposit paid</display-name>
+                <type>double</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="trackingNumber">
+                <display-name xml:lang="x-default">Dispatch tracking number</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="dispatchedAt">
+                <display-name xml:lang="x-default">Dispatched at</display-name>
+                <type>datetime</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="deliveredAt">
+                <display-name xml:lang="x-default">Delivered at</display-name>
+                <type>datetime</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="returnedAt">
+                <display-name xml:lang="x-default">Returned at</display-name>
+                <type>datetime</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="lateDays">
+                <display-name xml:lang="x-default">Days returned late</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="lateFee">
+                <display-name xml:lang="x-default">Late fee</display-name>
+                <type>double</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="inspectedAt">
+                <display-name xml:lang="x-default">Inspected at</display-name>
+                <type>datetime</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="damageAmount">
+                <display-name xml:lang="x-default">Damage deduction</display-name>
+                <type>double</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="damageNotes">
+                <display-name xml:lang="x-default">Damage notes</display-name>
+                <type>text</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="damagePhotos">
+                <display-name xml:lang="x-default">Damage photo files (IMPEX/src/rentals)</display-name>
+                <type>set-of-string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="refundAmount">
+                <display-name xml:lang="x-default">Deposit refunded</display-name>
+                <type>double</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="refundReference">
+                <display-name xml:lang="x-default">Refund reference</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="refundedAt">
+                <display-name xml:lang="x-default">Refunded at</display-name>
+                <type>datetime</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="atRisk">
+                <display-name xml:lang="x-default">Unit may not be back in time (previous rental overdue)</display-name>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="history">
+                <display-name xml:lang="x-default">Desk history</display-name>
+                <type>text</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+        </attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="RentalBooking">
+                <display-name xml:lang="x-default">Rental booking</display-name>
+                <attribute attribute-id="type"/>
+                <attribute attribute-id="status"/>
+                <attribute attribute-id="unitID"/>
+                <attribute attribute-id="productID"/>
+                <attribute attribute-id="productName"/>
+                <attribute attribute-id="startDate"/>
+                <attribute attribute-id="endDate"/>
+                <attribute attribute-id="blockedUntil"/>
+                <attribute attribute-id="durationDays"/>
+                <attribute attribute-id="holdExpiresAt"/>
+                <attribute attribute-id="orderNo"/>
+                <attribute attribute-id="customerNo"/>
+                <attribute attribute-id="customerEmail"/>
+                <attribute attribute-id="customerName"/>
+                <attribute attribute-id="currency"/>
+                <attribute attribute-id="rentalFee"/>
+                <attribute attribute-id="depositAmount"/>
+                <attribute attribute-id="trackingNumber"/>
+                <attribute attribute-id="dispatchedAt"/>
+                <attribute attribute-id="deliveredAt"/>
+                <attribute attribute-id="returnedAt"/>
+                <attribute attribute-id="lateDays"/>
+                <attribute attribute-id="lateFee"/>
+                <attribute attribute-id="inspectedAt"/>
+                <attribute attribute-id="damageAmount"/>
+                <attribute attribute-id="damageNotes"/>
+                <attribute attribute-id="damagePhotos"/>
+                <attribute attribute-id="refundAmount"/>
+                <attribute attribute-id="refundReference"/>
+                <attribute attribute-id="refundedAt"/>
+                <attribute attribute-id="atRisk"/>
+                <attribute attribute-id="history"/>
+            </attribute-group>
+        </group-definitions>
+    </custom-type>
+</metadata>

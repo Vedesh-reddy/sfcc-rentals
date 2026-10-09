@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jobs xmlns="http://www.demandware.com/xml/impex/jobs/2015-07-01">
+    <job job-id="Rentals-ReleaseHolds" priority="0"><description>Release expired cart holds and bookings of failed or cancelled orders; schedule every 15 minutes after configuration.</description><parameters/><flow><context site-id="RefArch"/><step step-id="ReleaseHolds" type="custom.Rentals.ReleaseHolds" enforce-restart="false"><parameters/></step></flow><rules/><triggers/></job>
+    <job job-id="Rentals-LateFees" priority="0"><description>Charge late fees on overdue rentals and keep their units blocked; schedule daily after configuration.</description><parameters/><flow><context site-id="RefArch"/><step step-id="LateFees" type="custom.Rentals.LateFees" enforce-restart="false"><parameters/></step></flow><rules/><triggers/></job>
+</jobs>

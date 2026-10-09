@@ -1,0 +1,54 @@
+{
+  "step-types": {
+    "script-module-step": [
+      {
+        "@type-id": "custom.Rentals.ReleaseHolds",
+        "@supports-parallel-execution": "false",
+        "@supports-site-context": "true",
+        "@supports-organization-context": "false",
+        "description": "Release expired cart holds and bookings of cancelled or failed orders, and remove past day claims",
+        "module": "plugin_rentals/cartridge/scripts/jobs/releaseRentalHolds.js",
+        "function": "execute",
+        "transactional": "false",
+        "timeout-in-seconds": 900,
+        "parameters": {},
+        "status-codes": {
+          "status": [
+            {
+              "@code": "OK",
+              "description": "Complete"
+            },
+            {
+              "@code": "ERROR",
+              "description": "Partial failure; retry and inspect logs"
+            }
+          ]
+        }
+      },
+      {
+        "@type-id": "custom.Rentals.LateFees",
+        "@supports-parallel-execution": "false",
+        "@supports-site-context": "true",
+        "@supports-organization-context": "false",
+        "description": "Charge late fees on overdue rentals and keep their units blocked",
+        "module": "plugin_rentals/cartridge/scripts/jobs/rentalLateFees.js",
+        "function": "execute",
+        "transactional": "false",
+        "timeout-in-seconds": 900,
+        "parameters": {},
+        "status-codes": {
+          "status": [
+            {
+              "@code": "OK",
+              "description": "Complete"
+            },
+            {
+              "@code": "ERROR",
+              "description": "Partial failure; retry and inspect logs"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
