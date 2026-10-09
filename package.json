@@ -1,0 +1,36 @@
+{
+  "name": "sfcc-rentals",
+  "version": "1.0.0",
+  "private": true,
+  "license": "UNLICENSED",
+  "description": "SFRA cartridge: rent pieces for 3, 5 or 7 days with unit-level calendars, cleaning buffers, cart holds, refundable deposits, size trials and a Business Manager rental desk.",
+  "author": "Vedesh Reddy",
+  "engines": {
+    "node": ">=22"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Vedesh-reddy/sfcc-rentals.git"
+  },
+  "scripts": {
+    "test": "mocha 'test/unit/plugin_rentals/**/*.js'",
+    "build": "node scripts/build.js",
+    "lint:js": "eslint cartridges test scripts --ext .js",
+    "lint:isml": "node scripts/check-templates.js",
+    "lint:docs": "node scripts/check-docs.js",
+    "lint": "npm run lint:js && npm run lint:isml && npm run lint:docs",
+    "validate": "npm run lint && npm test && npm run build",
+    "package:metadata": "node scripts/package-metadata.js"
+  },
+  "devDependencies": {
+    "webpack": "5.106.2",
+    "eslint": "8.57.1",
+    "eslint-config-airbnb-base": "15.0.0",
+    "eslint-config-prettier": "9.1.2",
+    "eslint-plugin-import": "2.32.0",
+    "mocha": "10.8.2",
+    "isml-linter": "5.43.14",
+    "archiver": "7.0.1",
+    "chai": "3.5.0"
+  }
+}
