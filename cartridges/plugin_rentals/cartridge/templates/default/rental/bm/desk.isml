@@ -1,0 +1,22 @@
+<isdecorate template="application/MenuFrame">
+    <iscontent type="text/html" charset="UTF-8" />
+    <h1>${Resource.msg('desk.title', 'rentals', null)}</h1>
+
+    <form action="${URLUtils.url('RentalDesk-Start')}" method="get" class="rental-desk-search">
+        <label for="rental-desk-q">${Resource.msg('desk.search', 'rentals', null)}</label>
+        <input type="text" id="rental-desk-q" name="q" value="${pdict.search}" maxlength="50" />
+        <button type="submit" class="button">${Resource.msg('desk.search.button', 'rentals', null)}</button>
+    </form>
+
+    <isif condition="${pdict.found !== null}">
+        <h2>${Resource.msgf('desk.found', 'rentals', null, pdict.search)}</h2>
+        <isset name="rows" value="${pdict.found}" scope="page" />
+        <isinclude template="rental/bm/rows" />
+    </isif>
+
+    <isloop items="${pdict.queues}" var="queue">
+        <h2>${Resource.msg('desk.queue.' + queue.id, 'rentals', null)}</h2>
+        <isset name="rows" value="${queue.rows}" scope="page" />
+        <isinclude template="rental/bm/rows" />
+    </isloop>
+</isdecorate>

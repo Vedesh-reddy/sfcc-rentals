@@ -1,0 +1,34 @@
+<isif condition="${rows.length > 0}">
+    <table class="rental-desk-table" border="0" cellpadding="4" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <th class="table_header left" scope="col">${Resource.msg('desk.col.booking', 'rentals', null)}</th>
+                <th class="table_header left" scope="col">${Resource.msg('desk.col.status', 'rentals', null)}</th>
+                <th class="table_header left" scope="col">${Resource.msg('desk.col.product', 'rentals', null)}</th>
+                <th class="table_header left" scope="col">${Resource.msg('desk.col.unit', 'rentals', null)}</th>
+                <th class="table_header left" scope="col">${Resource.msg('desk.col.dates', 'rentals', null)}</th>
+                <th class="table_header left" scope="col">${Resource.msg('desk.col.customer', 'rentals', null)}</th>
+                <th class="table_header left" scope="col">${Resource.msg('desk.col.order', 'rentals', null)}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <isloop items="${rows}" var="row">
+                <tr>
+                    <td class="table_detail"><a href="${row.url}">${row.bookingNo}</a></td>
+                    <td class="table_detail">
+                        ${row.status}
+                        <isif condition="${row.overdue}"><strong class="rental-desk-flag">${Resource.msg('desk.overdue', 'rentals', null)}</strong></isif>
+                        <isif condition="${row.atRisk}"><strong class="rental-desk-flag">${Resource.msg('desk.at.risk', 'rentals', null)}</strong></isif>
+                    </td>
+                    <td class="table_detail">${row.product}</td>
+                    <td class="table_detail">${row.unitID}</td>
+                    <td class="table_detail">${row.dates}</td>
+                    <td class="table_detail">${row.customer}</td>
+                    <td class="table_detail">${row.orderNo}</td>
+                </tr>
+            </isloop>
+        </tbody>
+    </table>
+<iselse/>
+    <p>${Resource.msg('desk.empty', 'rentals', null)}</p>
+</isif>
