@@ -1,0 +1,47 @@
+<isdecorate template="common/layout/page">
+    <div class="container py-4">
+        <isinclude template="components/breadcrumbs/pageBreadcrumbs"/>
+        <h1 class="h2">${Resource.msg('bookings.title', 'rentals', null)}</h1>
+
+        <isif condition="${pdict.bookings.length > 0}">
+            <div class="table-responsive">
+                <table class="table rental-bookings-table">
+                    <caption class="sr-only visually-hidden">${Resource.msg('bookings.title', 'rentals', null)}</caption>
+                    <thead>
+                        <tr>
+                            <th scope="col">${Resource.msg('bookings.booking', 'rentals', null)}</th>
+                            <th scope="col">${Resource.msg('bookings.piece', 'rentals', null)}</th>
+                            <th scope="col">${Resource.msg('bookings.dates', 'rentals', null)}</th>
+                            <th scope="col">${Resource.msg('bookings.status', 'rentals', null)}</th>
+                            <th scope="col">${Resource.msg('bookings.deposit', 'rentals', null)}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <isloop items="${pdict.bookings}" var="booking">
+                            <tr>
+                                <td>
+                                    ${booking.bookingNo}
+                                    <isif condition="${booking.trial}"><span class="badge badge-info bg-info">${Resource.msg('bookings.trial', 'rentals', null)}</span></isif>
+                                </td>
+                                <td>${booking.productName}</td>
+                                <td>${booking.dates}</td>
+                                <td>${booking.status}</td>
+                                <td>
+                                    ${booking.deposit}
+                                    <isif condition="${!!booking.refund}">
+                                        <span class="d-block small">${Resource.msgf('bookings.refund', 'rentals', null, booking.refund)}</span>
+                                    </isif>
+                                    <isif condition="${!!booking.deductions}">
+                                        <span class="d-block small text-muted">${Resource.msgf('bookings.deductions', 'rentals', null, booking.deductions)}</span>
+                                    </isif>
+                                </td>
+                            </tr>
+                        </isloop>
+                    </tbody>
+                </table>
+            </div>
+        <iselse/>
+            <p>${Resource.msg('bookings.empty', 'rentals', null)}</p>
+        </isif>
+    </div>
+</isdecorate>
