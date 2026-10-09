@@ -1,0 +1,6 @@
+{
+  "hostname": "your-sandbox.demandware.net",
+  "username": "your-webdav-username",
+  "password": "your-webdav-access-key",
+  "code-version": "your-code-version"
+}
