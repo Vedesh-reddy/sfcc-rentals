@@ -1,0 +1,16 @@
+<!-- Availability -->
+<div class="row availability product-availability" data-ready-to-order="${product.readyToOrder}" data-available="${product.available}">
+    <isinclude template="product/components/availability" />
+</div>
+
+<iscomment>Outside product-options, which the base scripts re-render from the variation response where a remote include cannot run.</iscomment>
+<isscript>
+    var rentalApiProduct = dw.catalog.ProductMgr.getProduct(product.id);
+    var rentalPanel = dw.system.Site.current.getCustomPreferenceValue('RentalsEnabled') && !!rentalApiProduct && !!rentalApiProduct.custom.rentalEnabled;
+    if (rentalPanel) {
+        require('*/cartridge/scripts/assets').addJs('/js/rentals.js');
+    }
+</isscript>
+<isif condition="${rentalPanel}">
+    <isinclude url="${URLUtils.url('Rental-Panel', 'pid', product.id)}" />
+</isif>

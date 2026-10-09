@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<extensions xmlns="http://www.demandware.com/xml/bmmodules/2007-12-11"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://www.demandware.com/xml/bmmodules/2007-12-11 bmext.xsd">
+    <menuitem id="rentals" position="99998" site="true">
+        <name xml:lang="x-default">Rentals</name>
+        <short_description xml:lang="x-default">Dispatch, returns, damage inspection and deposit refunds</short_description>
+        <description xml:lang="x-default">Dispatch, returns, damage inspection and deposit refunds</description>
+        <sldsIconName>date_time</sldsIconName>
+    </menuitem>
+    <menuaction id="rental-desk" menupath="rentals" position="10" site="true">
+        <name xml:lang="x-default">Rental Desk</name>
+        <short_description xml:lang="x-default">Dispatch and return desk for rental pieces</short_description>
+        <description xml:lang="x-default">Dispatch and return desk for rental pieces</description>
+        <exec pipeline="RentalDesk" node="Start"/>
+        <sub-pipelines>
+            <pipeline name="RentalDesk-Start"/>
+            <pipeline name="RentalDesk-Show"/>
+            <pipeline name="RentalDesk-Action"/>
+        </sub-pipelines>
+    </menuaction>
+</extensions>
