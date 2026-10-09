@@ -1,0 +1,5 @@
+{
+  "env": { "node": true, "es2022": true },
+  "parserOptions": { "ecmaVersion": 2022 },
+  "rules": { "require-jsdoc": "off", "no-console": "off", "import/no-extraneous-dependencies": "off" }
+}
