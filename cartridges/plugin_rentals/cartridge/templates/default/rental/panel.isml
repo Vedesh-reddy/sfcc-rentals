@@ -1,0 +1,37 @@
+<iscontent type="text/html" charset="UTF-8" compact="true"/>
+<isif condition="${pdict.show}">
+    <div class="rental-panel row mt-2" data-rental-panel data-quote-url="${pdict.quoteUrl}">
+        <div class="col-12">
+            <fieldset class="rental-dates mb-2">
+                <legend class="h6 font-weight-bold fw-bold">${Resource.msg('panel.title', 'rentals', null)}</legend>
+                <label for="rental-start">${Resource.msg('panel.start', 'rentals', null)}</label>
+                <input type="date" id="rental-start" class="form-control rental-start" name="rentalStart"
+                    min="${pdict.first}" max="${pdict.last}" required aria-describedby="rental-help rental-quote-status"/>
+                <p id="rental-help" class="small text-muted mt-1 mb-1">${Resource.msgf('panel.help', 'rentals', null, pdict.bufferDays)}</p>
+                <p id="rental-quote-status" class="rental-quote-status small mb-0" role="status" aria-live="polite"></p>
+            </fieldset>
+
+            <details class="rental-trial mb-2">
+                <summary>${Resource.msg('trial.title', 'rentals', null)}</summary>
+                <isif condition="${pdict.loggedIn}">
+                    <form class="rental-trial-form mt-2" action="${pdict.trialUrl}" method="post">
+                        <p class="small text-muted mb-1">${Resource.msg('trial.help', 'rentals', null)}</p>
+                        <label for="rental-trial-date">${Resource.msg('trial.date', 'rentals', null)}</label>
+                        <div class="input-group">
+                            <input type="date" id="rental-trial-date" class="form-control" name="trialDate" min="${pdict.first}" max="${pdict.last}" required/>
+                            <button type="submit" class="btn btn-outline-primary">${Resource.msg('trial.button', 'rentals', null)}</button>
+                        </div>
+                        <input type="hidden" name="pid" value=""/>
+                        <input type="hidden" name="${pdict.csrf.tokenName}" value="${pdict.csrf.token}"/>
+                        <p class="rental-trial-status small mt-1 mb-0" role="status" aria-live="polite"></p>
+                    </form>
+                <iselse/>
+                    <p class="small mt-2 mb-0"><a href="${pdict.loginUrl}">${Resource.msg('trial.login', 'rentals', null)}</a></p>
+                </isif>
+            </details>
+            <isif condition="${pdict.loggedIn}">
+                <p class="small mb-0"><a href="${pdict.bookingsUrl}">${Resource.msg('panel.bookings', 'rentals', null)}</a></p>
+            </isif>
+        </div>
+    </div>
+</isif>

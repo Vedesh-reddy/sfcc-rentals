@@ -1,0 +1,87 @@
+<isdecorate template="application/MenuFrame">
+    <iscontent type="text/html" charset="UTF-8" />
+    <isset name="booking" value="${pdict.booking}" scope="page" />
+    <isset name="details" value="${pdict.details}" scope="page" />
+    <p><a href="${URLUtils.url('RentalDesk-Start')}">${Resource.msg('desk.back', 'rentals', null)}</a></p>
+    <h1>${Resource.msgf('desk.booking.title', 'rentals', null, booking.bookingNo)}</h1>
+
+    <isif condition="${!!pdict.result}">
+        <p class="rental-desk-result" role="status"><strong>${Resource.msg(pdict.result, 'rentals', null)}</strong></p>
+    </isif>
+    <isif condition="${booking.overdue}">
+        <p class="rental-desk-flag" role="alert"><strong>${Resource.msgf('desk.overdue.detail', 'rentals', null, pdict.amounts.lateDays, pdict.amounts.lateFee)}</strong></p>
+    </isif>
+    <isif condition="${booking.atRisk}">
+        <p class="rental-desk-flag" role="alert"><strong>${Resource.msg('desk.at.risk.detail', 'rentals', null)}</strong></p>
+    </isif>
+
+    <table class="rental-desk-details" border="0" cellpadding="4" cellspacing="0">
+        <tr><th class="table_header left" scope="row">${Resource.msg('desk.col.status', 'rentals', null)}</th><td class="table_detail">${booking.status} (${booking.type})</td></tr>
+        <tr><th class="table_header left" scope="row">${Resource.msg('desk.col.product', 'rentals', null)}</th><td class="table_detail">${booking.product}</td></tr>
+        <tr><th class="table_header left" scope="row">${Resource.msg('desk.col.unit', 'rentals', null)}</th><td class="table_detail">${booking.unitID}</td></tr>
+        <tr><th class="table_header left" scope="row">${Resource.msg('desk.col.dates', 'rentals', null)}</th><td class="table_detail">${booking.dates} (${Resource.msgf('desk.blocked.until', 'rentals', null, details.blockedUntil)})</td></tr>
+        <tr><th class="table_header left" scope="row">${Resource.msg('desk.col.customer', 'rentals', null)}</th><td class="table_detail">${booking.customer} ${details.customerEmail || ''}</td></tr>
+        <tr><th class="table_header left" scope="row">${Resource.msg('desk.col.order', 'rentals', null)}</th><td class="table_detail">${booking.orderNo}</td></tr>
+        <tr><th class="table_header left" scope="row">${Resource.msg('desk.fee', 'rentals', null)}</th><td class="table_detail">${pdict.amounts.fee}</td></tr>
+        <tr><th class="table_header left" scope="row">${Resource.msg('desk.deposit', 'rentals', null)}</th><td class="table_detail">${pdict.amounts.deposit}</td></tr>
+        <tr><th class="table_header left" scope="row">${Resource.msg('desk.tracking', 'rentals', null)}</th><td class="table_detail">${details.trackingNumber || ''}</td></tr>
+        <tr><th class="table_header left" scope="row">${Resource.msg('desk.late', 'rentals', null)}</th><td class="table_detail">${pdict.amounts.lateDays} / ${pdict.amounts.lateFee}</td></tr>
+        <tr><th class="table_header left" scope="row">${Resource.msg('desk.damage', 'rentals', null)}</th><td class="table_detail">${pdict.amounts.damage} ${details.damageNotes || ''}</td></tr>
+        <tr><th class="table_header left" scope="row">${Resource.msg('desk.refund', 'rentals', null)}</th><td class="table_detail">${pdict.amounts.refund} ${details.refundReference || ''}</td></tr>
+    </table>
+
+    <isif condition="${pdict.photos.length > 0}">
+        <h2>${Resource.msg('desk.photos', 'rentals', null)}</h2>
+        <div class="rental-desk-photos">
+            <isloop items="${pdict.photos}" var="photo" status="photoStatus">
+                <img src="${photo}" alt="${Resource.msgf('desk.photo.alt', 'rentals', null, String(photoStatus.count))}" width="240" />
+            </isloop>
+        </div>
+    </isif>
+
+    <isloop items="${pdict.actions}" var="action">
+        <h2>${Resource.msg('desk.action.' + action, 'rentals', null)}</h2>
+        <form action="${pdict.actionUrl}" method="post" class="rental-desk-action" <isif condition="${action === 'inspect'}">enctype="multipart/form-data"</isif>>
+            <input type="hidden" name="action" value="${action}" />
+            <isif condition="${action === 'dispatch'}">
+                <p>
+                    <label for="rental-desk-tracking">${Resource.msg('desk.tracking', 'rentals', null)}</label><br/>
+                    <input type="text" id="rental-desk-tracking" name="tracking" maxlength="64" required />
+                </p>
+            <iselseif condition="${action === 'inspect'}">
+                <p>
+                    <label for="rental-desk-damage">${Resource.msgf('desk.damage.label', 'rentals', null, pdict.amounts.deposit)}</label><br/>
+                    <input type="number" id="rental-desk-damage" name="damage" min="0" step="0.01" value="0" required />
+                </p>
+                <p>
+                    <label for="rental-desk-notes">${Resource.msg('desk.notes', 'rentals', null)}</label><br/>
+                    <textarea id="rental-desk-notes" name="notes" rows="4" cols="60" maxlength="2000"></textarea>
+                </p>
+                <p>
+                    <label for="rental-desk-photos">${Resource.msg('desk.photos.label', 'rentals', null)}</label><br/>
+                    <input type="file" id="rental-desk-photos" name="photos" accept="image/jpeg,image/png,image/webp" multiple />
+                </p>
+                <p>
+                    <input type="checkbox" id="rental-desk-maintenance" name="maintenance" value="true" />
+                    <label for="rental-desk-maintenance">${Resource.msg('desk.maintenance', 'rentals', null)}</label>
+                </p>
+            <iselseif condition="${action === 'refund'}">
+                <p>${Resource.msgf('desk.refund.due', 'rentals', null, pdict.amounts.refundDue)}</p>
+                <p>
+                    <label for="rental-desk-reference">${Resource.msg('desk.reference', 'rentals', null)}</label><br/>
+                    <input type="text" id="rental-desk-reference" name="reference" maxlength="64" required />
+                </p>
+            </isif>
+            <button type="submit" class="button">${Resource.msg('desk.button.' + action, 'rentals', null)}</button>
+        </form>
+    </isloop>
+
+    <isif condition="${pdict.history.length > 0}">
+        <h2>${Resource.msg('desk.history', 'rentals', null)}</h2>
+        <ul>
+            <isloop items="${pdict.history}" var="entry">
+                <li>${entry}</li>
+            </isloop>
+        </ul>
+    </isif>
+</isdecorate>
