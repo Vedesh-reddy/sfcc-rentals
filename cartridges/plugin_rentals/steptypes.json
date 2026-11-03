@@ -7,8 +7,8 @@
         "@supports-site-context": "true",
         "@supports-organization-context": "false",
         "description": "Release expired cart holds and bookings of cancelled or failed orders, and remove past day claims",
-        "module": "plugin_rentals/cartridge/scripts/jobs/releaseRentalHolds.js",
-        "function": "execute",
+        "module": "plugin_rentals/cartridge/scripts/jobs/jobSteps.js",
+        "function": "releaseHolds",
         "transactional": "false",
         "timeout-in-seconds": 900,
         "parameters": {},
@@ -31,8 +31,8 @@
         "@supports-site-context": "true",
         "@supports-organization-context": "false",
         "description": "Charge late fees on overdue rentals and keep their units blocked",
-        "module": "plugin_rentals/cartridge/scripts/jobs/rentalLateFees.js",
-        "function": "execute",
+        "module": "plugin_rentals/cartridge/scripts/jobs/jobSteps.js",
+        "function": "lateFees",
         "transactional": "false",
         "timeout-in-seconds": 900,
         "parameters": {},
@@ -45,6 +45,30 @@
             {
               "@code": "ERROR",
               "description": "Partial failure; retry and inspect logs"
+            }
+          ]
+        }
+      },
+      {
+        "@type-id": "custom.Rentals.ReportFailures",
+        "@supports-parallel-execution": "false",
+        "@supports-site-context": "true",
+        "@supports-organization-context": "false",
+        "description": "Fails the job when an earlier step failed, so Business Manager shows it",
+        "module": "plugin_rentals/cartridge/scripts/jobs/jobSteps.js",
+        "function": "reportFailures",
+        "transactional": "false",
+        "timeout-in-seconds": 60,
+        "parameters": {},
+        "status-codes": {
+          "status": [
+            {
+              "@code": "OK",
+              "description": "No failed steps"
+            },
+            {
+              "@code": "ERROR",
+              "description": "An earlier step failed; the message names it"
             }
           ]
         }
