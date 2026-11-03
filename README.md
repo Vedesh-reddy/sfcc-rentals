@@ -52,7 +52,7 @@ npm run package:metadata
 2. **Deploy.** Upload `cartridges/plugin_rentals` to your code version, including the generated `cartridge/static`.
 3. **Activate.** Put `plugin_rentals` first on the storefront cartridge path, and add it to the Business Manager cartridge path.
 4. **Import.** Rename `metadata/rentals/sites/RefArch` and the job `site-id` to your site, rebuild the ZIP and import `dist/rentals-metadata.zip`.
-5. **Configure.** Add the two options to your rental products, create one unit per piece, grant the desk permission and schedule the two jobs.
+5. **Configure.** Add the two options to your rental products, create one unit per piece, grant the desk permission and schedule `Rentals-Job`.
 
 ```text
 plugin_rentals:app_storefront_base
@@ -65,14 +65,14 @@ The [installation guide](docs/INSTALLATION.md) covers each step.
 | # | Feature | Entry point | Data | Job |
 | --- | --- | --- | --- | --- |
 | 1 | [Rental dates on the product page](#1-rental-dates-on-the-product-page) | Product page | `RentalUnit`, `RentalUnitDay` | — |
-| 2 | [Cart holds and concurrency](#2-cart-holds-and-concurrency) | Add to cart | `RentalBooking` (`HELD`) | `Rentals-ReleaseHolds` |
+| 2 | [Cart holds and concurrency](#2-cart-holds-and-concurrency) | Add to cart | `RentalBooking` (`HELD`) | `ReleaseHolds` step of `Rentals-Job` |
 | 3 | [Price, deposit and tax](#3-price-deposit-and-tax) | Cart and checkout | Catalog options | — |
-| 4 | [Order confirmation](#4-order-confirmation) | Place order | `RentalBooking` (`RESERVED`) | `Rentals-ReleaseHolds` |
+| 4 | [Order confirmation](#4-order-confirmation) | Place order | `RentalBooking` (`RESERVED`) | `ReleaseHolds` step of `Rentals-Job` |
 | 5 | [Size trial](#5-size-trial) | Product page | `RentalBooking` (`TRIAL`) | — |
 | 6 | [My rentals](#6-my-rentals) | `Rental-Bookings` | `RentalBooking` | — |
 | 7 | [Rental desk](#7-rental-desk) | Business Manager | `RentalBooking` | — |
 | 8 | [Damage inspection and deposit refund](#8-damage-inspection-and-deposit-refund) | Business Manager | `RentalBooking`, IMPEX files | — |
-| 9 | [Late returns](#9-late-returns) | — | `RentalBooking`, `RentalUnitDay` | `Rentals-LateFees` |
+| 9 | [Late returns](#9-late-returns) | — | `RentalBooking`, `RentalUnitDay` | `LateFees` step of `Rentals-Job` |
 
 ---
 
@@ -144,7 +144,7 @@ On the sandbox order, tax is 5% of the $199 rental fee and $15.99 shipping. The 
 
 **How.** The `checkoutHelpers.placeOrder` wrapper clears the hold expiry on the booking and its days, then sets `RESERVED`. A failure there is logged and never fails the order.
 
-**Rules.** If a hold ran out during payment and another shopper took a day, the booking is flagged *at risk* for the desk. `Rentals-ReleaseHolds` frees the days of bookings whose order is later cancelled or failed.
+**Rules.** If a hold ran out during payment and another shopper took a day, the booking is flagged *at risk* for the desk. `ReleaseHolds` step of `Rentals-Job` frees the days of bookings whose order is later cancelled or failed.
 
 ---
 
@@ -220,7 +220,7 @@ The refund due is the deposit minus the damage deduction and the late fee. Staff
 
 ### 9. Late returns
 
-`Rentals-LateFees` (daily) handles every rental still out after its return date:
+`LateFees` step of `Rentals-Job` (daily) handles every rental still out after its return date:
 
 - it updates the running late fee: days late × `RentalLateFeePerDay`;
 - it extends the unit's block until the piece can be back and cleaned;
@@ -229,6 +229,12 @@ The refund due is the deposit minus the damage deduction and the late fee. Staff
 The fee becomes final when the desk records the return. This path is covered by unit tests, not screenshots: no sandbox booking could end before the capture date.
 
 ---
+
+## Background job
+
+All background work runs in one Business Manager job, `Rentals-Job`, with its steps in order. A failing step doesn't stop the next one, and the last step, `ReportFailures`, then marks the job `ERROR`.
+
+Upgrading from a version with several jobs? Import `metadata/retired-jobs/jobs.xml` once to delete the old ones.
 
 ## Documentation
 

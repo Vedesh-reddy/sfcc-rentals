@@ -60,7 +60,7 @@ The archive `metadata/rentals` contains:
 | --- | --- |
 | `meta/custom-objecttype-definitions.xml` | `RentalUnit`, `RentalUnitDay`, `RentalBooking` (site scope) |
 | `meta/system-objecttype-extensions.xml` | Product `rentalEnabled`; ProductLineItem `rentalStart`, `rentalBookingNo`; the **Rentals** site preferences |
-| `jobs.xml` | `Rentals-ReleaseHolds`, `Rentals-LateFees` |
+| `jobs.xml` | `ReleaseHolds` step of `Rentals-Job`, `LateFees` step of `Rentals-Job` |
 | `sites/RefArch/preferences.xml` | `RentalsEnabled = true` |
 
 1. Rename `sites/RefArch` to your site ID and set `site-id` in `jobs.xml`.
@@ -140,8 +140,8 @@ Create one `RentalUnit` per physical piece, either in **Merchant Tools → Custo
 
 | Job | Schedule | Purpose |
 | --- | --- | --- |
-| `Rentals-ReleaseHolds` | Every 15 minutes | Releases expired holds and bookings of cancelled or failed orders, and removes past day claims |
-| `Rentals-LateFees` | Daily | Updates late fees, extends overdue units' blocks, flags bookings at risk |
+| `ReleaseHolds` step of `Rentals-Job` | Every 15 minutes | Releases expired holds and bookings of cancelled or failed orders, and removes past day claims |
+| `LateFees` step of `Rentals-Job` | Daily | Updates late fees, extends overdue units' blocks, flags bookings at risk |
 
 ## 9. Check
 

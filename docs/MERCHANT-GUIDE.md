@@ -55,8 +55,8 @@ The refund due is the deposit minus the damage deduction and the late fee, never
 
 | Job | What to expect |
 | --- | --- |
-| `Rentals-ReleaseHolds` | Expires holds older than `RentalHoldMinutes`, cancels bookings whose order was cancelled or failed, and deletes day claims before yesterday. `ERROR` means a booking could not be released; see the `rentals` log. |
-| `Rentals-LateFees` | Updates the running late fee of overdue rentals and keeps their units blocked. A booking it puts at risk appears in the desk's *At risk* queue. |
+| `ReleaseHolds` step of `Rentals-Job` | Expires holds older than `RentalHoldMinutes`, cancels bookings whose order was cancelled or failed, and deletes day claims before yesterday. `ERROR` means a booking could not be released; see the `rentals` log. |
+| `LateFees` step of `Rentals-Job` | Updates the running late fee of overdue rentals and keeps their units blocked. A booking it puts at risk appears in the desk's *At risk* queue. |
 
 ## Custom objects
 
@@ -68,4 +68,4 @@ The refund due is the deposit minus the damage deduction and the late fee, never
 
 ## Orders
 
-Every rental line carries `rentalStart` and `rentalBookingNo`. The booking stores the order number, so the desk can look up a booking by order. Cancelling the order in Business Manager frees the dates on the next `Rentals-ReleaseHolds` run.
+Every rental line carries `rentalStart` and `rentalBookingNo`. The booking stores the order number, so the desk can look up a booking by order. Cancelling the order in Business Manager frees the dates on the next `ReleaseHolds` step of `Rentals-Job` run.

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jobs xmlns="http://www.demandware.com/xml/impex/jobs/2015-07-01">
+    <job job-id="Rentals-ReleaseHolds" mode="delete">
+        <triggers/>
+    </job>
+    <job job-id="Rentals-LateFees" mode="delete">
+        <triggers/>
+    </job>
+</jobs>

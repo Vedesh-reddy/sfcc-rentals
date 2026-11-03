@@ -55,7 +55,7 @@ TRIAL
   RESERVED ───────── cancel ─────────────────────────────→ CANCELLED
 ```
 
-Cancel and expiry delete the booking's day rows. All other transitions keep them, so the history of a unit's calendar stays until `Rentals-ReleaseHolds` removes days before yesterday.
+Cancel and expiry delete the booking's day rows. All other transitions keep them, so the history of a unit's calendar stays until `ReleaseHolds` step of `Rentals-Job` removes days before yesterday.
 
 ## Data model
 
